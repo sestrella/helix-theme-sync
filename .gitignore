@@ -87,6 +87,9 @@ iOSInjectionProject/
 
 # End of https://www.toptal.com/developers/gitignore/api/swift
 
+# Nix flakes
+result
+
 # Devenv
 .devenv*
 devenv.local.nix
