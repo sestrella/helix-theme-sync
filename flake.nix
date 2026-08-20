@@ -3,7 +3,7 @@
     devenv.url = "github:cachix/devenv";
     nix-filter.url = "github:numtide/nix-filter";
     nixpkgs.url = "github:nixos/nixpkgs";
-    systems.url = "github:nix-systems/default-darwin";
+    systems.url = "github:nix-systems/default";
   };
 
   outputs =
