@@ -28,6 +28,5 @@ jobs:
         with:
           extra_nix_config: |
             accept-flake-config = true
-            no-pure-eval = true
       - name: Run actionlint
-        run: nix develop --command actionlint
+        run: nix develop --no-pure-eval --command actionlint
