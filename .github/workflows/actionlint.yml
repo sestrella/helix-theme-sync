@@ -1,11 +1,6 @@
 name: actionlint
 
 on:
-  pull_request:
-    branches:
-      - main
-    paths:
-      - .github/workflows/*
   push:
     branches:
       - main
@@ -29,4 +24,4 @@ jobs:
           extra_nix_config: |
             accept-flake-config = true
       - name: Run actionlint
-        run: nix develop --no-pure-eval --command actionlint
+        run: nix develop .#ci --command actionlint
