@@ -30,6 +30,7 @@
             modules = [
               {
                 packages = [
+                  pkgs.actionlint
                   pkgs.swiftpm
                   pkgs.swiftpm2nix
                 ];
