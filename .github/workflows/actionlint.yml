@@ -25,4 +25,4 @@ jobs:
       - name: Install Nix
         uses: cachix/install-nix-action@v31
       - name: Run actionlint
-        run: nix develop --command actionlint
+        run: nix develop --impure --command actionlint
