@@ -1,9 +1,14 @@
 {
   inputs = {
-    devenv.url = "github:cachix/devenv";
+    devenv.url = "github:cachix/devenv?ref=v2.2.2";
     nix-filter.url = "github:numtide/nix-filter";
-    nixpkgs.url = "github:nixos/nixpkgs";
-    systems.url = "github:nix-systems/default-darwin";
+    nixpkgs.url = "github:cachix/devenv-nixpkgs?ref=rolling";
+    systems.url = "github:nix-systems/default";
+  };
+
+  nixConfig = {
+    extra-substituters = "https://devenv.cachix.org";
+    extra-trusted-public-keys = "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw=";
   };
 
   outputs =
@@ -30,6 +35,7 @@
             modules = [
               {
                 packages = [
+                  pkgs.actionlint
                   pkgs.swiftpm
                   pkgs.swiftpm2nix
                 ];

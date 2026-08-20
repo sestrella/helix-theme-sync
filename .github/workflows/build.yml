@@ -2,7 +2,8 @@ name: build
 
 on:
   pull_request:
-    branches: [main]
+    branches:
+      - main
     paths:
       - .github/workflows/build.yml
       - Package.*
@@ -10,7 +11,8 @@ on:
       - default.nix
       - flake.*
   push:
-    branches: [main]
+    branches:
+      - main
     paths:
       - .github/workflows/build.yml
       - Package.*
@@ -25,11 +27,15 @@ concurrency:
 jobs:
   build:
     runs-on: macos-latest
+    timeout-minutes: 5
     steps:
       - name: Checkout code
         uses: actions/checkout@v7
       - name: Install Nix
         uses: cachix/install-nix-action@v31
+        with:
+          extra_nix_config: |
+            accept-flake-config = true
       - name: Configure Cachix
         uses: cachix/cachix-action@v17
         with:
