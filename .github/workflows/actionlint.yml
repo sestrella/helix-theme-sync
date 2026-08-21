@@ -5,11 +5,13 @@ on:
     branches:
       - main
     paths:
+      - .github/actionlint.yml
       - .github/workflows/*
   push:
     branches:
       - main
     paths:
+      - .github/actionlint.yml
       - .github/workflows/*
 
 concurrency:
@@ -25,8 +27,5 @@ jobs:
         uses: actions/checkout@v7
       - name: Install Nix
         uses: cachix/install-nix-action@v31
-        with:
-          extra_nix_config: |
-            accept-flake-config = true
       - name: Run actionlint
-        run: nix develop --no-pure-eval --command actionlint
+        run: nix develop .#ci --no-pure-eval --accept-flake-config --command actionlint

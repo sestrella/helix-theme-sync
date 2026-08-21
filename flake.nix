@@ -1,9 +1,8 @@
 {
   inputs = {
-    devenv.url = "github:cachix/devenv?ref=v2.2.2";
+    devenv.url = "github:cachix/devenv";
     nix-filter.url = "github:numtide/nix-filter";
-    nixpkgs.url = "github:cachix/devenv-nixpkgs?ref=rolling";
-    systems.url = "github:nix-systems/default";
+    nixpkgs.url = "github:cachix/devenv-nixpkgs/rolling";
   };
 
   nixConfig = {
@@ -16,26 +15,20 @@
       devenv,
       nix-filter,
       nixpkgs,
-      systems,
       ...
     }@inputs:
-    let
-      forAllSystems = nixpkgs.lib.genAttrs (import systems);
-    in
     {
-      devShells = forAllSystems (
-        system:
-        let
-          pkgs = nixpkgs.legacyPackages.${system};
-        in
-        {
-          default = devenv.lib.mkShell {
+      devShells = {
+        aarch64-darwin.default =
+          let
+            pkgs = nixpkgs.legacyPackages.aarch64-darwin;
+          in
+          devenv.lib.mkShell {
             inherit inputs pkgs;
 
             modules = [
               {
                 packages = [
-                  pkgs.actionlint
                   pkgs.swiftpm
                   pkgs.swiftpm2nix
                 ];
@@ -51,19 +44,29 @@
               }
             ];
           };
-        }
-      );
+        x86_64-linux.ci =
+          let
+            pkgs = nixpkgs.legacyPackages.x86_64-linux;
+          in
+          devenv.lib.mkShell {
+            inherit inputs pkgs;
 
-      packages = forAllSystems (
-        system:
-        let
-          pkgs = nixpkgs.legacyPackages.${system};
-        in
-        {
-          default = pkgs.callPackage ./default.nix {
-            nix-filter = nix-filter.lib;
+            modules = [
+              {
+                packages = [
+                  pkgs.actionlint
+                ];
+              }
+            ];
           };
-        }
-      );
+      };
+
+      packages.aarch64-darwin.default =
+        let
+          pkgs = nixpkgs.legacyPackages.aarch64-darwin;
+        in
+        pkgs.callPackage ./default.nix {
+          nix-filter = nix-filter.lib;
+        };
     };
 }
