@@ -2,7 +2,7 @@
   inputs = {
     devenv.url = "github:cachix/devenv";
     nix-filter.url = "github:numtide/nix-filter";
-    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "github:cachix/devenv-nixpkgs/rolling";
   };
 
   nixConfig = {
