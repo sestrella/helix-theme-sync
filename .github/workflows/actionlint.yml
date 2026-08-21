@@ -25,4 +25,8 @@ jobs:
             accept-flake-config = true
             no-pure-eval = true
       - name: Run actionlint
+<<<<<<< HEAD
         run: nix develop .#ci --command actionlint
+=======
+        run: nix develop .#ci --no-pure-eval --command actionlint
+>>>>>>> 6e97f48 (Create a devShell to use in GHA workflow)
