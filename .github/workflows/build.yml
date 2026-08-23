@@ -2,8 +2,7 @@ name: build
 
 on:
   pull_request:
-    branches:
-      - main
+    branches: [main]
     paths:
       - .github/workflows/build.yml
       - Package.*
@@ -11,8 +10,7 @@ on:
       - default.nix
       - flake.*
   push:
-    branches:
-      - main
+    branches: [main]
     paths:
       - .github/workflows/build.yml
       - Package.*
@@ -25,8 +23,23 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  # TODO: fix this step
+  # test:
+  #   runs-on: ubuntu-latest
+  #   timeout-minutes: 5
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v7
+  #     - name: Install Nix
+  #       uses: cachix/install-nix-action@v31
+  #     - name: Install devenv
+  #       run: nix profile add nixpkgs#devenv
+  #     - name: Run pre-commit hooks
+  #       run: devenv test
+
   build:
     runs-on: macos-latest
+    # needs: [test]
     timeout-minutes: 5
     steps:
       - name: Checkout code
