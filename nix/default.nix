@@ -2,7 +2,7 @@
 {
   workspaceStateFile = ./workspace-state.json;
   hashes = {
-    "swift-argument-parser" = "sha256-BWm2ZbNIvlamNp8cxoicFlAcujjhH22VPzs67lEIXWU=";
-    "swift-log" = "sha256-1fDmMRJ0+i1GdcQPhICEfvSun7vBkpONJrdGbG8IJwc=";
+    "swift-argument-parser" = "sha256-MzJmBxWztP8ut4VA6INBVIVxE77OpCPcNqBRM9ujb7k=";
+    "swift-log" = "sha256-MW9QSZrCdX/D7w02pOwBn4SnWP5DJ+GXJUr5/XN5Ch8=";
   };
 }
