@@ -12,6 +12,7 @@
 
   outputs =
     {
+      self,
       # devenv,
       nix-filter,
       nixpkgs,
@@ -69,6 +70,10 @@
         pkgs.callPackage ./default.nix {
           nix-filter = nix-filter.lib;
         };
+
+      overlays.default = final: prev: {
+        helix-theme-sync = self.packages.${prev.stdenv.hostPlatform.system}.default;
+      };
 
       homeManagerModules.default = import ./module.nix;
     };
