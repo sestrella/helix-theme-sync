@@ -17,6 +17,4 @@
       files = "Package.swift";
     };
   };
-
-  cachix.pull = [ "devenv" ];
 }
