@@ -68,5 +68,7 @@
         pkgs.callPackage ./default.nix {
           nix-filter = nix-filter.lib;
         };
+
+      homeManagerModules.default = import ./module.nix;
     };
 }
