@@ -11,16 +11,18 @@
       nixpkgs,
       ...
     }:
+    let
+      pkgs = nixpkgs.legacyPackages.${system};
+      system = "aarch64-darwin";
+    in
     {
+      formatter.${system} = pkgs.nixfmt-tree;
+
       homeModules.default = import ./module.nix;
 
-      packages.aarch64-darwin.default =
-        let
-          pkgs = nixpkgs.legacyPackages.aarch64-darwin;
-        in
-        pkgs.callPackage ./default.nix {
-          nix-filter = nix-filter.lib;
-        };
+      packages.${system}.default = pkgs.callPackage ./default.nix {
+        nix-filter = nix-filter.lib;
+      };
 
       overlays.default = final: prev: {
         helix-theme-sync = self.packages.${prev.stdenv.hostPlatform.system}.default;

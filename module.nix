@@ -17,11 +17,13 @@ in
       example = "pkgs.helix-theme-sync";
     };
 
-    configDir = lib.mkOption {
+    configThemesDir = lib.mkOption {
       type = lib.types.path;
+      default = "${config.xdg.configHome}/helix/themes";
+      defaultText = "~/.config/helix/themes";
     };
 
-    runtimeDir = lib.mkOption {
+    runtimeThemesDir = lib.mkOption {
       type = lib.types.path;
     };
 
@@ -37,10 +39,10 @@ in
       config = {
         Program = lib.getExe cfg.package;
         ProgramArguments = [
-          "--config-dir"
-          cfg.configDir
-          "--runtime-dir"
-          cfg.runtimeDir
+          "--config-themes-dir"
+          cfg.configThemesDir
+          "--runtime-themes-dir"
+          cfg.runtimeThemesDir
           "--theme"
           cfg.theme
         ];
@@ -50,9 +52,8 @@ in
           Crashed = true;
           SuccessfulExit = false;
         };
-        # TODO: configure this values
-        StandardOutPath = "${config.home.homeDirectory}/.local/state/helix-theme-sync/logs/out.log";
-        StandardErrorPath = "${config.home.homeDirectory}/.local/state/helix-theme-sync/logs/err.log";
+        StandardOutPath = "${config.xdg.stateHome}/helix-theme-sync/stdout.log";
+        StandardErrorPath = "${config.xdg.stateHome}/helix-theme-sync/stderr.log";
       };
     };
   };
