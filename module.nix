@@ -10,7 +10,7 @@ let
 in
 {
   options.services.helix-theme-sync = {
-    enable = lib.mkEnableOption "TODO";
+    enable = lib.mkEnableOption "helix-theme-sync, a service to keep the Helix theme in sync with the system appearance";
 
     package = lib.mkPackageOption pkgs "helix-theme-sync" {
       nullable = true;
@@ -21,14 +21,17 @@ in
       type = lib.types.path;
       default = "${config.xdg.configHome}/helix/themes";
       defaultText = "~/.config/helix/themes";
+      description = "Path to the Helix configuration themes directory";
     };
 
     runtimeThemesDir = lib.mkOption {
       type = lib.types.path;
+      description = "Path to the Helix runtime themes directory";
     };
 
     theme = lib.mkOption {
       type = lib.types.str;
+      description = "Name of the Helix theme to sync with the system appearance";
     };
   };
 
