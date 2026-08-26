@@ -12,16 +12,16 @@ class ThemeChangedObserver {
 	let center = DistributedNotificationCenter.default
 	let fileManager = FileManager.default
 
-	private var configDir: String
-	private var runtimeDir: String
+	private var configThemesDir: String
+	private var runtimeThemesDir: String
 	private var theme: String
 
 	private var centralObserver: NSObjectProtocol?
 	private var workspaceObserver: NSObjectProtocol?
 
-	init(configDir: String, runtimeDir: String, theme: String) {
-		self.configDir = configDir
-		self.runtimeDir = runtimeDir
+	init(configThemesDir: String, runtimeThemesDir: String, theme: String) {
+		self.configThemesDir = configThemesDir
+		self.runtimeThemesDir = runtimeThemesDir
 		self.theme = theme
 	}
 
@@ -78,9 +78,8 @@ class ThemeChangedObserver {
 	}
 
 	private func symlinkTheme(suffix: String) -> Bool {
-		let destinationPath = "\(runtimeDir)/themes/\(theme)_\(suffix).toml"
-		let themesDir = "\(configDir)/themes"
-		let themePath = "\(themesDir)/\(theme).toml"
+		let destinationPath = "\(runtimeThemesDir)/\(theme)_\(suffix).toml"
+		let themePath = "\(configThemesDir)/\(theme).toml"
 
 		do {
 			// Validate destination exists
@@ -89,9 +88,9 @@ class ThemeChangedObserver {
 				return false
 			}
 
-			logger.info("Creating themes directory at \(themesDir)")
+			logger.info("Creating themes directory at \(configThemesDir)")
 			try fileManager.createDirectory(
-				atPath: themesDir,
+				atPath: configThemesDir,
 				withIntermediateDirectories: true
 			)
 
@@ -161,19 +160,19 @@ struct HelixThemeSync: ParsableCommand {
 		version: "1.0.0"
 	)
 
-	@Option(name: .shortAndLong, help: "Helix config directory")
-	var configDir: String
+	@Option(name: .shortAndLong, help: "Helix config themes directory")
+	var configThemesDir: String
 
-	@Option(name: .shortAndLong, help: "Helix runtime directory")
-	var runtimeDir: String
+	@Option(name: .shortAndLong, help: "Helix runtime themes directory")
+	var runtimeThemesDir: String
 
 	@Option(name: .shortAndLong, help: "Theme name")
 	var theme: String
 
 	func run() throws {
 		let observer = ThemeChangedObserver(
-			configDir: NSString(string: configDir).expandingTildeInPath,
-			runtimeDir: NSString(string: runtimeDir).expandingTildeInPath,
+			configThemesDir: NSString(string: configThemesDir).expandingTildeInPath,
+			runtimeThemesDir: NSString(string: runtimeThemesDir).expandingTildeInPath,
 			theme: theme
 		)
 		observer.add()

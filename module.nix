@@ -10,23 +10,28 @@ let
 in
 {
   options.services.helix-theme-sync = {
-    enable = lib.mkEnableOption "TODO";
+    enable = lib.mkEnableOption "helix-theme-sync, a service to keep the Helix theme in sync with the system appearance";
 
     package = lib.mkPackageOption pkgs "helix-theme-sync" {
       nullable = true;
       example = "pkgs.helix-theme-sync";
     };
 
-    configDir = lib.mkOption {
+    configThemesDir = lib.mkOption {
       type = lib.types.path;
+      default = "${config.xdg.configHome}/helix/themes";
+      defaultText = "~/.config/helix/themes";
+      description = "Path to the Helix configuration themes directory";
     };
 
-    runtimeDir = lib.mkOption {
+    runtimeThemesDir = lib.mkOption {
       type = lib.types.path;
+      description = "Path to the Helix runtime themes directory";
     };
 
     theme = lib.mkOption {
       type = lib.types.str;
+      description = "Name of the Helix theme to sync with the system appearance";
     };
   };
 
@@ -37,10 +42,10 @@ in
       config = {
         Program = lib.getExe cfg.package;
         ProgramArguments = [
-          "--config-dir"
-          cfg.configDir
-          "--runtime-dir"
-          cfg.runtimeDir
+          "--config-themes-dir"
+          cfg.configThemesDir
+          "--runtime-themes-dir"
+          cfg.runtimeThemesDir
           "--theme"
           cfg.theme
         ];
@@ -50,9 +55,8 @@ in
           Crashed = true;
           SuccessfulExit = false;
         };
-        # TODO: configure this values
-        StandardOutPath = "${config.home.homeDirectory}/.local/state/helix-theme-sync/logs/out.log";
-        StandardErrorPath = "${config.home.homeDirectory}/.local/state/helix-theme-sync/logs/err.log";
+        StandardOutPath = "${config.xdg.stateHome}/helix-theme-sync/stdout.log";
+        StandardErrorPath = "${config.xdg.stateHome}/helix-theme-sync/stderr.log";
       };
     };
   };
