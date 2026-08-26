@@ -49,9 +49,9 @@ Import the overlay and the home module:
   services.helix-theme-sync = {
     enable = true;
 
-    configDir = "${config.home.homeDirectory}/.config/helix";
-    runtimeDir = "${pkgs.helix-unwrapped.HELIX_DEFAULT_RUNTIME}";
-    theme = config.programs.helix.settings.theme;
+    configThemesDir = "${config.xdg.configHome}/helix/themes";
+    runtimeThemesDir = "${pkgs.helix-unwrapped.HELIX_DEFAULT_RUNTIME}/themes";
+    theme = "solarized";
   };
 }
 ```
