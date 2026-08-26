@@ -157,7 +157,7 @@ class ThemeChangedObserver {
 
 struct HelixThemeSync: ParsableCommand {
 	static let configuration = CommandConfiguration(
-		version: "1.0.0"
+		version: "0.1.0"
 	)
 
 	@Option(name: .shortAndLong, help: "Helix config themes directory")
