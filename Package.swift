@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     name: "helix-theme-sync",
     dependencies: [
-        .package(url: "https://github.com/apple/swift-log", "1.0.0"..<"1.7.0"),
+        .package(url: "https://github.com/apple/swift-log", "1.0.0"..<"2.0.0"),
         .package(url: "https://github.com/apple/swift-argument-parser", "1.0.0"..<"1.8.0")
     ],
     targets: [
