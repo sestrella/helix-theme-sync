@@ -1,0 +1,35 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Version to release (for example, v1.2.3)
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: macos-latest
+    env:
+      VERSION: ${{ inputs.version || github.ref_name }}
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v7
+      - name: Build release binary
+        run: swift build -c release --arch arm64
+      - name: Package binary
+        run: |
+          mkdir -p dist
+          cp .build/arm64-apple-macosx/release/helix-theme-sync dist/helix-theme-sync
+          tar -C dist -czf "helix-theme-sync-macos-arm64-${VERSION}.tar.gz" helix-theme-sync
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$VERSION" "helix-theme-sync-macos-arm64-${VERSION}.tar.gz" --generate-notes
