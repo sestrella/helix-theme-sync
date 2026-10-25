@@ -157,11 +157,11 @@ class ThemeChangedObserver {
 
 struct HelixThemeSync: ParsableCommand {
 	static let configuration = CommandConfiguration(
-		version: "0.1.0"
+		version: "0.2.0"
 	)
 
-	@Option(name: .shortAndLong, help: "Helix config themes directory")
-	var configThemesDir: String = "~/.config/helix"
+	@Option(name: .shortAndLong, help: "Helix config directory")
+	var configDir: String = "~/.config/helix"
 
 	@Option(name: .shortAndLong, help: "Helix runtime themes directory")
 	var runtimeThemesDir: String
@@ -171,7 +171,7 @@ struct HelixThemeSync: ParsableCommand {
 
 	func run() throws {
 		let observer = ThemeChangedObserver(
-			configThemesDir: NSString(string: configThemesDir).expandingTildeInPath,
+			configThemesDir: "\(NSString(string: configDir).expandingTildeInPath)/themes",
 			runtimeThemesDir: NSString(string: runtimeThemesDir).expandingTildeInPath,
 			theme: theme
 		)

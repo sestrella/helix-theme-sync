@@ -11,7 +11,7 @@ let
 in
 stdenv.mkDerivation rec {
   pname = "helix-theme-sync";
-  version = "0.1.0";
+  version = "0.2.0";
 
   src = nix-filter {
     root = ./.;
