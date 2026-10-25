@@ -1,22 +1,16 @@
 class HelixThemeSync < Formula
   desc "Keep the Helix theme in sync with macOS appearance"
   homepage "https://github.com/sestrella/helix-theme-sync"
-  url "https://github.com/sestrella/helix-theme-sync/archive/c34841b3ece8b80539e183b7b506c94744133676.tar.gz"
+  url "https://github.com/sestrella/helix-theme-sync/releases/download/v#{version}/helix-theme-sync-macos-arm64-v#{version}.tar.gz"
   version "0.1.0"
-  sha256 "ba1f38358b8687ed95fda47b949f5d86edebb399343f9aaff6e3268e7d13ed19"
+  sha256 "19615c74ee7e96f1443a90a92226e6551c82e84f199272bb33bb1093d131ce77"
   license "MIT"
 
-  depends_on "swift" => :build
+  depends_on arch: :arm64
   depends_on "helix"
 
-  def fetch
-    system "swift", "package", "resolve"
-  end
-
   def install
-    system "swift", "build", "--skip-update", "--disable-sandbox", "--configuration", "release",
-           "--product", "helix-theme-sync"
-    bin.install ".build/release/helix-theme-sync"
+    bin.install "helix-theme-sync"
 
     (bin/"helix-theme-sync-service").write <<~SH
       #!/bin/sh
