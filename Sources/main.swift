@@ -161,7 +161,7 @@ struct HelixThemeSync: ParsableCommand {
 	)
 
 	@Option(name: .shortAndLong, help: "Helix config themes directory")
-	var configThemesDir: String
+	var configThemesDir: String = "~/.config/helix"
 
 	@Option(name: .shortAndLong, help: "Helix runtime themes directory")
 	var runtimeThemesDir: String
